@@ -1,2 +1,3 @@
-AG
-AGT
+AA
+AB
+

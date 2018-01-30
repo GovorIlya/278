@@ -1,32 +1,18 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.*;
+
 
 public class Main {
 
     public static void main(String[] args) throws  FileNotFoundException {
         PrintWriter writer = new PrintWriter(new File("output.txt"));
-        Scanner scanner = new Scanner(new File("input.txt"));
-
-      String line1="";
-      String line2="";
-     try {
-          line1=scanner.nextLine();
-     }catch (Exception e ){
-         System.out.println(e.getMessage());
-     }
-      try {
-          line2=scanner.nextLine();
-      }catch (Exception e){
-         System.out.println(e.getMessage());
-      }
-        scanner.close();
-
-        if (validation(line1) && validation(line2)) {
-
+        String line1="";
+        String line2="";
+        try(BufferedReader br = new BufferedReader(new FileReader("input.txt"))){
+                line1=br.readLine();
+                line2=br.readLine();
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
             char[] m1 = line1.toCharArray();
             char[] m2 = line2.toCharArray();
             int f = 0;
@@ -43,21 +29,11 @@ public class Main {
                 writer.write("NO");
             }
 
-        }else {
-            if(line2.isEmpty() && !line1.isEmpty()){writer.write("NO");}
-            else if(line1.isEmpty() && line2.isEmpty()){writer.write("YES");}
-            else if(!line2.isEmpty()&& line1.isEmpty()){writer.write("YES");}
-            else {writer.write("NO");}
-        }
+
         writer.close();
     }
 
 
-    public static boolean validation(String testString){
-        Pattern p = Pattern.compile("^(A|G|C|T)+$");
-        Matcher m = p.matcher(testString);
-        return m.matches();
-    }
 
 }
 
